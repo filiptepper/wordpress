@@ -1,13 +1,13 @@
 server {
-        listen       80;  
-        server_name   _;  
+        listen       80;
+        server_name   _;
 
-        location / {
+        location /blog/ {
                 root   /data/<%= @app_name %>/current;
                 index  index.php index.html index.htm;
-		
-								include /etc/nginx/common/fcgi.conf;
-	
+
+                include /etc/nginx/common/fcgi.conf;
+
                 # this serves static files that exist without running other rewrite tests
                 if (-f $request_filename) {
                         expires 30d;
@@ -21,11 +21,11 @@ server {
         }
 
         location ~ \.php$ {
-								include /etc/nginx/common/fcgi.conf;
+                include /etc/nginx/common/fcgi.conf;
 
-                fastcgi_pass   localhost:9000;  
+                fastcgi_pass   localhost:9000;
                 fastcgi_index  index.php;
                 fastcgi_param  SCRIPT_FILENAME  /data/<%= @app_name %>/current$fastcgi_script_name;
         }
-        
+
 }
